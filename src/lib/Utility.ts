@@ -9,6 +9,20 @@ export namespace Utility {
         return filePath.replace(".proto", "").replace(/\//g, "_").replace(/\./g, "_").replace(/-/g, "_") + "_pb";
     }
 
+    export function anythingToSnakeCase(str: string) {
+        if (str.includes("_")) {
+            return str.split(/_/).map(x => x.toLowerCase()).join("_");
+        }
+
+        if (str.match(/^[A-Z]/)) {
+            str = str.charAt(0).toLowerCase() + str.slice(1);
+        }
+
+        return str.replace(/([A-Z])/g, (m) => {
+            return "_" + m.toLowerCase();
+        });
+    }
+
     export function snakeToCamel(str: string): string {
         return str.replace(/(_\w)/g, (m) => {
             return m[1].toUpperCase();
